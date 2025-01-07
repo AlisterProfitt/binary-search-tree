@@ -6,4 +6,10 @@ class Node {
     };
 }
 
-export { Node };
+class Tree {
+    constructor() {
+        this.root = null
+    }
+}
+
+export { Node, Tree };
