@@ -59,7 +59,31 @@ class Tree {
             this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
         }
     };
+
+    insert(value) {
+        function insertNewNode(node) {
+            console.log(node);
+            if (node.left === null && node.right === null) {
+                value > node.data ? node.right = new Node(value) : node.left = new Node(value);
+                return;
+            };
+
+            if (value > node.data) {
+                insertNewNode(node.right);
+            }
+
+            if (value < node.data) {
+                insertNewNode(node.left);
+            }
+        }
+
+        insertNewNode(this.root)
+    }
 }
 
-const newNode = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-newNode.prettyPrint(newNode.root)
+const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+newTree.insert(7);
+newTree.insert(324);
+newTree.insert(325);
+newTree.insert(6);
+newTree.prettyPrint(newTree.root)
