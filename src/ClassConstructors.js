@@ -79,11 +79,33 @@ class Tree {
 
         insertNewNode(this.root)
     }
+
+    deleteItem(value) {
+        function findNode(node) {
+            if (!node) {
+                return 'Not Found'
+            }
+
+            if (node.data === value) {
+                return node;
+            }
+            
+            if (value < node.data) {
+                return findNode(node.left)
+            }
+            
+            if (value > node.data) {
+                return findNode(node.right)
+            }
+        }
+        return findNode(this.root)
+    }
 }
 
 const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-newTree.insert(7);
-newTree.insert(324);
-newTree.insert(325);
-newTree.insert(6);
+// newTree.insert(7);
+// newTree.insert(324);
+// newTree.insert(325);
+// newTree.insert(6);
 newTree.prettyPrint(newTree.root)
+console.log(newTree.deleteItem(1));
