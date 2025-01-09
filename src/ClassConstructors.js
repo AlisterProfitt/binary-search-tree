@@ -62,7 +62,6 @@ class Tree {
 
     insert(value) {
         function insertNewNode(node) {
-            console.log(node);
             if (node.left === null && node.right === null) {
                 value > node.data ? node.right = new Node(value) : node.left = new Node(value);
                 return;
@@ -80,25 +79,57 @@ class Tree {
         insertNewNode(this.root)
     }
 
-    deleteItem(value) {
-        function findNode(node) {
-            if (!node) {
-                return 'Not Found'
+    deleteItem(value, root = this.root) {
+        function getSuccessor(current) {
+            current = current.right;
+            while (current !== null && current.left !== null) {
+                current = current.left;
             }
 
-            if (node.data === value) {
-                return node;
-            }
-            
-            if (value < node.data) {
-                return findNode(node.left)
-            }
-            
-            if (value > node.data) {
-                return findNode(node.right)
-            }
+            return current
         }
-        return findNode(this.root)
+
+        if (root === null) {
+            return root;
+        }
+
+        if (root.data > value) {
+            root.left = this.deleteItem(value, root.left);
+        } else if (root.data < value) {
+            root.right = this.deleteItem(value, root.right);
+        } else {
+            if (root.left === null) {
+                return root.right;
+            }
+
+            if (root.right === null) {
+                return root.left;
+            }
+
+            let successor = getSuccessor(root);
+            root.data = successor.data;
+            root.right = this.deleteItem(successor.data, root.right);
+        }
+
+        return root;
+    }
+
+    find(value, node = this.root) {
+        if (!node) {
+            return 'Not Found'
+        }
+
+        if (node.data === value) {
+            return node;
+        }
+        
+        if (value < node.data) {
+            return this.find(value, node.left)
+        }
+        
+        if (value > node.data) {
+            return this.find(value, node.right)
+        }
     }
 }
 
@@ -106,6 +137,7 @@ const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 // newTree.insert(7);
 // newTree.insert(324);
 // newTree.insert(325);
-// newTree.insert(6);
+newTree.insert(8);
+newTree.deleteItem(67)
 newTree.prettyPrint(newTree.root)
-console.log(newTree.deleteItem(1));
+
