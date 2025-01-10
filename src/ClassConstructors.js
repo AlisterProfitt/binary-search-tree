@@ -154,7 +154,7 @@ class Tree {
 
     height(root = this.root) {
         if (root === null) {
-            return 0;
+            return -1;
         } else {
             const leftHeight = this.height(root.left);
             const rightHeight = this.height(root.right);
@@ -173,7 +173,7 @@ class Tree {
 
         const height = this.height();
         const root = this.root;
-        for (let i = 1; i <= height; i++) {
+        for (let i = 0; i <= height; i++) {
             visitLevel(root, i)
         }
 
@@ -182,7 +182,7 @@ class Tree {
               return;
             }
 
-            if (level === 1) {
+            if (level === 0) {
               callback(root);
             } else {
                 visitLevel(root.left, level - 1);
@@ -232,6 +232,10 @@ class Tree {
         this.postOrder(callback, root.right);
         callback(root);
     }
+
+    depth(node, root = this.root) {
+
+    }
 }
 
 const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -241,9 +245,11 @@ const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 newTree.insert(8);
 newTree.deleteItem(67)
 newTree.prettyPrint(newTree.root)
-newTree.preOrder(logTreeEntries)
-newTree.inOrder(logTreeEntries)
-newTree.postOrder(logTreeEntries)
+newTree.levelOrderRecursive(logTreeEntries)
+// newTree.preOrder(logTreeEntries)
+// newTree.inOrder(logTreeEntries)
+// newTree.postOrder(logTreeEntries)
+console.log(newTree.height());
 
 function logTreeEntries(node) {
     console.log(node.data);
