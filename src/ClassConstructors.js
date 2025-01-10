@@ -114,7 +114,7 @@ class Tree {
         return root;
     }
 
-    find(value, node = this.root) {
+    findNode(value, node = this.root) {
         if (!node) {
             return 'Not Found'
         }
@@ -124,11 +124,11 @@ class Tree {
         }
         
         if (value < node.data) {
-            return this.find(value, node.left)
+            return this.findNode(value, node.left)
         }
         
         if (value > node.data) {
-            return this.find(value, node.right)
+            return this.findNode(value, node.right)
         }
     }
 
@@ -169,7 +169,24 @@ class Tree {
     }
 
     levelOrderRecursive(callback) {
+        const height = this.height();
+        const root = this.root;
+        for (let i = 1; i <= height; i++) {
+            visitLevel(root, i)
+        }
 
+        function visitLevel(root, level) {
+            if (root === null) {
+              return;
+            }
+
+            if (level === 1) {
+              callback(root);
+            } else {
+                visitLevel(root.left, level - 1);
+                visitLevel(root.right, level - 1);
+            }
+        }
     }
 }
 
@@ -180,7 +197,7 @@ const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 newTree.insert(8);
 newTree.deleteItem(67)
 newTree.prettyPrint(newTree.root)
-console.log(newTree.height());
+console.log(newTree.levelOrderRecursive(logTreeEntries));
 
 function logTreeEntries(node) {
     console.log(node.data);
