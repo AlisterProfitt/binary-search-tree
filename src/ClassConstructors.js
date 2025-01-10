@@ -151,6 +151,26 @@ class Tree {
             queue.shift()
         }
     }
+
+    // levelOrderRecursive dummy methods
+    height(root = this.root) {
+        //base case
+        if (root === null) {
+            return 0;
+        } else {
+            const leftHeight = this.height(root.left);
+            const rightHeight = this.height(root.right);
+            if (leftHeight > rightHeight) {
+                return leftHeight + 1;
+            } else {
+                return rightHeight + 1;
+            }
+        }
+    }
+
+    levelOrderRecursive(callback) {
+
+    }
 }
 
 const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -160,7 +180,7 @@ const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 newTree.insert(8);
 newTree.deleteItem(67)
 newTree.prettyPrint(newTree.root)
-console.log(newTree.levelOrderIterative(logTreeEntries));
+console.log(newTree.height());
 
 function logTreeEntries(node) {
     console.log(node.data);
