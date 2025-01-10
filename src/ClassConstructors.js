@@ -131,6 +131,26 @@ class Tree {
             return this.find(value, node.right)
         }
     }
+
+    levelOrderIterative(callback) {
+        if (!callback) {
+            throw new Error('A callback is required');
+        }
+
+        const queue = [this.root];
+        while (queue.length) {
+            callback(queue[0]);
+            if (queue[0].left) {
+                queue.push(queue[0].left);
+            }
+
+            if (queue[0].right) {
+                queue.push(queue[0].right)
+            }
+
+            queue.shift()
+        }
+    }
 }
 
 const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -140,4 +160,8 @@ const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 newTree.insert(8);
 newTree.deleteItem(67)
 newTree.prettyPrint(newTree.root)
+console.log(newTree.levelOrderIterative(logTreeEntries));
 
+function logTreeEntries(node) {
+    console.log(node.data);
+}
