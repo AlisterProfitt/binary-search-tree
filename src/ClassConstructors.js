@@ -152,9 +152,7 @@ class Tree {
         }
     }
 
-    // levelOrderRecursive dummy methods
     height(root = this.root) {
-        //base case
         if (root === null) {
             return 0;
         } else {
@@ -169,6 +167,10 @@ class Tree {
     }
 
     levelOrderRecursive(callback) {
+        if (!callback) {
+          throw new Error("A callback is required");
+        }
+
         const height = this.height();
         const root = this.root;
         for (let i = 1; i <= height; i++) {
@@ -188,6 +190,48 @@ class Tree {
             }
         }
     }
+
+    preOrder(callback, root = this.root) {
+        if (!callback) {
+            throw new Error("A callback is required");
+        }
+
+        if (root === null) {
+            return
+        }
+
+        callback(root);
+        this.preOrder(callback, root.left);
+        this.preOrder(callback, root.right);
+    }
+
+    inOrder(callback, root = this.root) {
+        if (!callback) {
+            throw new Error("A callback is required");
+        }
+
+        if (root === null) {
+          return;
+        }
+
+        this.inOrder(callback, root.left);
+        callback(root);
+        this.inOrder(callback, root.right);
+    }
+
+    postOrder(callback, root = this.root) {
+        if (!callback) {
+            throw new Error('A callback is required');
+        }
+
+        if (root === null) {
+            return root;
+        }
+
+        this.postOrder(callback, root.left);
+        this.postOrder(callback, root.right);
+        callback(root);
+    }
 }
 
 const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -197,8 +241,11 @@ const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 newTree.insert(8);
 newTree.deleteItem(67)
 newTree.prettyPrint(newTree.root)
-console.log(newTree.levelOrderRecursive(logTreeEntries));
+newTree.preOrder(logTreeEntries)
+newTree.inOrder(logTreeEntries)
+newTree.postOrder(logTreeEntries)
 
 function logTreeEntries(node) {
     console.log(node.data);
 }
+
