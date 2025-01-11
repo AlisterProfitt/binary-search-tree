@@ -234,7 +234,29 @@ class Tree {
     }
 
     depth(node, root = this.root) {
+        console.log(root);
+        if (!node) {
+            throw Error('Provide Valid Node');
+        }
 
+        if (root === null) {
+            return -1;
+        }
+        
+        let dist = -1;
+        if (node === root) {
+            return dist + 1;
+        }
+
+        if ((dist = this.depth(node, root.left)) >= 0) {
+            return dist + 1;
+        }
+
+        if ((dist = this.depth(node, root.right)) >= 0) {
+            return dist + 1;
+        }
+
+        return dist;
     }
 }
 
@@ -245,13 +267,14 @@ const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 newTree.insert(8);
 newTree.deleteItem(67)
 newTree.prettyPrint(newTree.root)
-newTree.levelOrderRecursive(logTreeEntries)
+// newTree.levelOrderRecursive(logTreeEntries)
 // newTree.preOrder(logTreeEntries)
 // newTree.inOrder(logTreeEntries)
 // newTree.postOrder(logTreeEntries)
-console.log(newTree.height());
+// console.log(newTree.height());
 
 function logTreeEntries(node) {
     console.log(node.data);
 }
 
+console.log(newTree.depth(newTree.findNode(8)));
