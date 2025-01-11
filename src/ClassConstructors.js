@@ -63,7 +63,14 @@ class Tree {
     insert(value) {
         function insertNewNode(node) {
             if (node.left === null && node.right === null) {
-                value > node.data ? node.right = new Node(value) : node.left = new Node(value);
+                if (value > node.data) {
+                    node.right = new Node(value)
+                }
+                
+                if (value < node.data) {
+                    node.left = new Node(value);
+                }
+                
                 return;
             };
 
@@ -258,6 +265,10 @@ class Tree {
 
         return dist;
     }
+
+    isBalanced() {
+
+    }
 }
 
 const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
@@ -266,6 +277,10 @@ const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 // newTree.insert(325);
 newTree.insert(8);
 newTree.deleteItem(67)
+newTree.insert(10000);
+newTree.insert(20000);
+newTree.insert(30000);
+newTree.insert(8);
 newTree.prettyPrint(newTree.root)
 // newTree.levelOrderRecursive(logTreeEntries)
 // newTree.preOrder(logTreeEntries)
