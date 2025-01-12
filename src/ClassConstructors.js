@@ -61,17 +61,21 @@ class Tree {
     };
 
     insert(value) {
+        if (!value) {
+            throw new Error('Please provide a value');
+        }
+
         function insertNewNode(node) {
-            if (node.left === null && node.right === null) {
-                if (value > node.data) {
-                    node.right = new Node(value)
-                }
-                
-                if (value < node.data) {
-                    node.left = new Node(value);
-                }
-                
+            if (node === null) {
                 return;
+            }
+
+            if (node.left === null && value < node.data) {
+                node.left = new Node(value);
+            } 
+            
+            if (node.right === null && value > node.data) {
+                node.right = new Node(value)
             };
 
             if (value > node.data) {
@@ -82,7 +86,7 @@ class Tree {
                 insertNewNode(node.left);
             }
         }
-
+        
         insertNewNode(this.root)
     }
 
@@ -267,7 +271,28 @@ class Tree {
     }
 
     isBalanced() {
+        const height = this.height.bind(this);
+        function checkBalance(root) {
+            if (root === null) {
+                return;
+            }
+            
+            const leftHeight = height(root.left);
+            const rightHeight = height(root.right);
+            if (leftHeight - rightHeight > 1 || rightHeight - leftHeight > 1) {
+                return false;
+            }
+            
+            const leftBoolean = checkBalance(root.left);
+            const rightBoolean = checkBalance(root.right);
+            if (leftBoolean === false || rightBoolean === false) {
+                return false;
+            }
 
+            return true;
+        }
+        
+        return checkBalance(this.root);
     }
 }
 
@@ -278,18 +303,27 @@ const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 newTree.insert(8);
 newTree.deleteItem(67)
 newTree.insert(10000);
-newTree.insert(20000);
-newTree.insert(30000);
-newTree.insert(8);
+// newTree.insert(20000);
+// newTree.insert(30000);
+newTree.insert(300);
+// newTree.insert(301);
+newTree.insert(302);
+// newTree.insert(8);
+// newTree.insert(10);
+// newTree.insert(299);
+// newTree.insert(297);
+// newTree.insert(298);
+newTree.insert(2);
 newTree.prettyPrint(newTree.root)
 // newTree.levelOrderRecursive(logTreeEntries)
 // newTree.preOrder(logTreeEntries)
 // newTree.inOrder(logTreeEntries)
 // newTree.postOrder(logTreeEntries)
 // console.log(newTree.height());
+console.log(newTree.isBalanced());
 
 function logTreeEntries(node) {
     console.log(node.data);
 }
 
-console.log(newTree.depth(newTree.findNode(8)));
+// console.log(newTree.depth(newTree.findNode(8)));
