@@ -12,19 +12,33 @@ class Tree {
     }
 
     mergeSortAndRemoveDuplicates(array) {
-        if (array.length === 0) return "Please Enter An Array With At Least 1 Item";
-        if (!Array.isArray(array)) return "Please Enter An Array Of Numbers";
-        if (array.length === 1) return array;
+        if (array.length === 0) {
+            return "Please Enter An Array With At Least 1 Item";
+        }
+
+        if (!Array.isArray(array)) {
+            return "Please Enter An Array Of Numbers";
+        }
+        
+        if (array.length === 1) {
+            return array;
+        }
+
         const left = this.mergeSortAndRemoveDuplicates(array.slice(0, array.length / 2));
         const right = this.mergeSortAndRemoveDuplicates(array.slice(array.length / 2));
+        console.log(`left Array: [${left}], right Array: [${right}]`);
         const sortedArray = [];
         for (let i = 0, lIndex = 0, rIndex = 0; i < (left.length + right.length); i++) {
+            console.log(`left: ${left[lIndex]}, right: ${right[rIndex]}`);
             if (typeof left[lIndex] === 'undefined' || right[rIndex] < left[lIndex]) {
                 sortedArray.push(right[rIndex++])
             } else if (typeof right[rIndex] === 'undefined' || left[lIndex] < right[rIndex]) {
                 sortedArray.push(left[lIndex++])
+            } else {
+                lIndex++
             }
         }
+        console.log(`Sorted Array: [${sortedArray}]`);
         return sortedArray;
     }
 
@@ -305,3 +319,23 @@ class Tree {
         this.root = this.createNode(treeValues, 0, treeValues.length - 1);
     }
 }
+
+function randomNumbers(lowest, highest, amount) {
+    if (amount <= 0) {
+        throw new Error('Please provide a number above 0');
+    }
+
+    const randomNumbersArray = [];
+
+    for (i = 0; i < amount; i++) {
+        const randomNumberInRange = Math.floor(Math.random() * (highest - lowest) + lowest);
+        randomNumbersArray.push(randomNumberInRange);
+    }
+
+    return randomNumbersArray
+}
+
+// console.log(randomNumbers(0, 101, 28));
+
+const newTree = new Tree([0, 72, 13, 68, 31, 45, 15, 62, 88, 5, 64, 18, 44, 94, 3, 56, 94, 24, 10, 24, 23, 20, 19, 18, 99, 3, 4]);
+newTree.prettyPrint(newTree.root);
