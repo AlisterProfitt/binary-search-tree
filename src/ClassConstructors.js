@@ -294,36 +294,14 @@ class Tree {
         
         return checkBalance(this.root);
     }
+
+    rebalance() {
+        const treeValues = []
+        function getValues(node){
+            treeValues.push(node.data)
+        }
+
+        this.inOrder(getValues);
+        this.root = this.createNode(treeValues, 0, treeValues.length - 1);
+    }
 }
-
-const newTree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-// newTree.insert(7);
-// newTree.insert(324);
-// newTree.insert(325);
-newTree.insert(8);
-newTree.deleteItem(67)
-newTree.insert(10000);
-// newTree.insert(20000);
-// newTree.insert(30000);
-newTree.insert(300);
-// newTree.insert(301);
-newTree.insert(302);
-// newTree.insert(8);
-// newTree.insert(10);
-// newTree.insert(299);
-// newTree.insert(297);
-// newTree.insert(298);
-newTree.insert(2);
-newTree.prettyPrint(newTree.root)
-// newTree.levelOrderRecursive(logTreeEntries)
-// newTree.preOrder(logTreeEntries)
-// newTree.inOrder(logTreeEntries)
-// newTree.postOrder(logTreeEntries)
-// console.log(newTree.height());
-console.log(newTree.isBalanced());
-
-function logTreeEntries(node) {
-    console.log(node.data);
-}
-
-// console.log(newTree.depth(newTree.findNode(8)));
