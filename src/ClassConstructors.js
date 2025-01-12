@@ -26,10 +26,8 @@ class Tree {
 
         const left = this.mergeSortAndRemoveDuplicates(array.slice(0, array.length / 2));
         const right = this.mergeSortAndRemoveDuplicates(array.slice(array.length / 2));
-        console.log(`left Array: [${left}], right Array: [${right}]`);
         const sortedArray = [];
         for (let i = 0, lIndex = 0, rIndex = 0; i < (left.length + right.length); i++) {
-            console.log(`left: ${left[lIndex]}, right: ${right[rIndex]}`);
             if (typeof left[lIndex] === 'undefined' || right[rIndex] < left[lIndex]) {
                 sortedArray.push(right[rIndex++])
             } else if (typeof right[rIndex] === 'undefined' || left[lIndex] < right[rIndex]) {
@@ -38,7 +36,6 @@ class Tree {
                 lIndex++
             }
         }
-        console.log(`Sorted Array: [${sortedArray}]`);
         return sortedArray;
     }
 
@@ -75,7 +72,7 @@ class Tree {
     };
 
     insert(value) {
-        if (!value) {
+        if (value === null || value === undefined) {
             throw new Error('Please provide a value');
         }
 
@@ -259,7 +256,6 @@ class Tree {
     }
 
     depth(node, root = this.root) {
-        console.log(root);
         if (!node) {
             throw Error('Provide Valid Node');
         }
@@ -335,7 +331,35 @@ function randomNumbers(lowest, highest, amount) {
     return randomNumbersArray
 }
 
-// console.log(randomNumbers(0, 101, 28));
+// console.log(randomNumbers(100, 500, 10));
 
-const newTree = new Tree([0, 72, 13, 68, 31, 45, 15, 62, 88, 5, 64, 18, 44, 94, 3, 56, 94, 24, 10, 24, 23, 20, 19, 18, 99, 3, 4]);
-newTree.prettyPrint(newTree.root);
+const newTree = new Tree([
+  81, 35, 72, 92, 73, 86, 29, 58, 5, 85, 26, 39, 53, 5, 0, 35, 54, 0, 33, 34,
+  58, 92, 57, 77, 48, 93, 32, 44, 32, 22, 33, 42, 18, 7, 94, 95, 82, 25
+]);
+
+function logTreeEntries(node){
+    console.log(node.data);
+}
+
+newTree.insert(115)
+newTree.insert(392)
+newTree.insert(319)
+newTree.insert(285)
+newTree.insert(248)
+newTree.insert(204)
+newTree.insert(257)
+newTree.insert(134)
+newTree.insert(418)
+newTree.insert(269)
+// newTree.prettyPrint(newTree.root);
+// newTree.rebalance();
+// console.log(newTree.isBalanced());
+// newTree.prettyPrint(newTree.root)
+newTree.inOrder(logTreeEntries)
+console.log('-----------------------------------------------------------------------');
+newTree.preOrder(logTreeEntries)
+console.log('-----------------------------------------------------------------------');
+newTree.postOrder(logTreeEntries)
+console.log('-----------------------------------------------------------------------');
+newTree.levelOrderIterative(logTreeEntries)
