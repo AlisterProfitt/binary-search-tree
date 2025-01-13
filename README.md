@@ -1,2 +1,1 @@
-# webpack-template
-Template for Webpack-based projects
+# Binary Search Tree Project for The Odin Project
